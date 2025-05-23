@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: api-flask-tailscale
+    env: python
+    buildCommand: ""
+    startCommand: python app.py
+    plan: free
