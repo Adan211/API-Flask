@@ -3,14 +3,22 @@ from flask_cors import CORS
 import pyodbc
 from datetime import datetime, timedelta
 import os
+from dotenv import load_dotenv
+import pytds
 
+load_dotenv()  # Carga las variables desde .env
 
 app = Flask(__name__)
 CORS(app)
 
-
-# Conexión a SQL Server (ajusta según tu configuración)
-conn_str = os.environ.get("CONN_STR")
+# Conexión usando variables de entorno
+conn_str = {
+    "server": os.getenv("DB_SERVER"),
+    "database": os.getenv("DB_NAME"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "port": int(os.getenv("DB_PORT", 1433))  # Default: 1433
+}
 
 @app.route('/reporte_ventas', methods=['GET'])
 def reporte_ventas():
